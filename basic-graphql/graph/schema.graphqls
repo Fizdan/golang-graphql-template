@@ -1,0 +1,96 @@
+# Define the Food type
+type Food {
+  id: ID!
+  name: String!
+  price: Float!
+  description: String!
+}
+
+# Define the Customer type
+type Customer {
+  id: ID!
+  name: String!
+  email: String!
+  phone: String
+  orders: [Order]
+}
+
+# Define the Order type
+type Order {
+  id: ID!
+  customer: Customer!
+  foodItems: [Food]!
+  total: Float!
+  status: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+# Define the Invoice type
+type Invoice {
+  id: ID!
+  order: Order!
+  totalAmount: Float!
+  paymentStatus: String!
+  issuedAt: String!
+}
+
+# Define the Query type for fetching data
+type Query {
+  # Fetch all foods
+  foods: [Food]
+  # Fetch a food by ID
+  food(id: ID!): Food
+  
+  # Fetch all customers
+  customers: [Customer]
+  # Fetch a customer by ID
+  customer(id: ID!): Customer
+  
+  # Fetch all orders
+  orders: [Order]
+  # Fetch an order by ID
+  order(id: ID!): Order
+  
+  # Fetch all invoices
+  invoices: [Invoice]
+  # Fetch an invoice by ID
+  invoice(id: ID!): Invoice
+}
+
+# Define the Mutation type for modifying data
+type Mutation {
+  # Add a new food item
+  addFood(name: String!, price: Float!, description: String!): Food
+  # Update an existing food item
+  updateFood(id: ID!, name: String, price: Float, description: String!): Food
+  # Delete a food item
+  deleteFood(id: ID!): Boolean
+  
+  # Add a new customer
+  addCustomer(name: String!, email: String!, phone: String!): Customer
+  # Update an existing customer
+  updateCustomer(id: ID!, name: String, email: String, phone: String!): Customer
+  # Delete a customer
+  deleteCustomer(id: ID!): Boolean
+  
+  # Add a new order
+  addOrder(customerId: ID!, foodItemIds: [ID]!): Order
+  # Update an existing order
+  updateOrder(id: ID!, status: String!): Order
+  # Delete an order
+  deleteOrder(id: ID!): Boolean
+  
+  # Add a new invoice
+  addInvoice(orderId: ID!, totalAmount: Float!, paymentStatus: String!): Invoice
+  # Update an existing invoice
+  updateInvoice(id: ID!, paymentStatus: String!): Invoice
+  # Delete an invoice
+  deleteInvoice(id: ID!): Boolean
+}
+
+# Define the schema
+schema {
+  query: Query
+  mutation: Mutation
+}
